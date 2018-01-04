@@ -105,6 +105,8 @@ void ddr_init(void)
 	reg32_write(0x3d400320,0x0);
 	reg32_write(0x3d000000,0x1);
 	reg32_write(0x3d4001b0,0x10);
+
+	/* die # 0 map 0-7 */
 	reg32_write(0x3c040280,0x0);
 	reg32_write(0x3c040284,0x1);
 	reg32_write(0x3c040288,0x2);
@@ -113,6 +115,8 @@ void ddr_init(void)
 	reg32_write(0x3c040294,0x5);
 	reg32_write(0x3c040298,0x6);
 	reg32_write(0x3c04029c,0x7);
+
+	/* die # 0 map 8-15 */
 	reg32_write(0x3c044280,0x2);
 	reg32_write(0x3c044284,0x6);
 	reg32_write(0x3c044288,0x4);
@@ -121,6 +125,8 @@ void ddr_init(void)
 	reg32_write(0x3c044294,0x3);
 	reg32_write(0x3c044298,0x0);
 	reg32_write(0x3c04429c,0x1);
+
+	/* die # 1 map 0-7 */
 	reg32_write(0x3c048280,0x0);
 	reg32_write(0x3c048284,0x1);
 	reg32_write(0x3c048288,0x2);
@@ -129,6 +135,8 @@ void ddr_init(void)
 	reg32_write(0x3c048294,0x5);
 	reg32_write(0x3c048298,0x6);
 	reg32_write(0x3c04829c,0x7);
+
+	/* die # 1 map 8-15 */
 	reg32_write(0x3c04c280,0x1);
 	reg32_write(0x3c04c284,0x3);
 	reg32_write(0x3c04c288,0x4);
