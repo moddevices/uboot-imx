@@ -120,7 +120,7 @@ int board_phy_config(struct phy_device *phydev)
 static struct dwc3_device dwc3_device_data = {
 	.maximum_speed = USB_SPEED_SUPER,
 	.base = USB1_BASE_ADDR,
-	.dr_mode = USB_DR_MODE_PERIPHERAL,
+	.dr_mode = USB_DR_MODE_HOST,
 	.index = 0,
 	.power_down_scale = 2,
 };
