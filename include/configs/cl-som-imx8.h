@@ -305,4 +305,8 @@
 
 #define CONFIG_OF_SYSTEM_SETUP
 
+#if defined(CONFIG_ANDROID_SUPPORT)
+#include "cl-som-imx8_android.h"
+#endif
+
 #endif
