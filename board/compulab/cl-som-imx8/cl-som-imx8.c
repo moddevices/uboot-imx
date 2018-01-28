@@ -196,6 +196,22 @@ int board_late_init(void)
 	return 0;
 }
 
+static iomux_v3_cfg_t const board_rst_pads[] = {
+	IMX8MQ_PAD_NAND_RE_B__GPIO3_IO15 | MUX_PAD_CTRL(NO_PAD_CTRL),
+};
+
+static void board_reset(void)
+{
+	imx_iomux_v3_setup_multiple_pads(board_rst_pads, ARRAY_SIZE(board_rst_pads));
+	gpio_request(IMX_GPIO_NR(3, 15), "board_reset");
+	gpio_direction_output(IMX_GPIO_NR(3, 15), 0);
+
+	while (1)
+		;
+}
+
+void reset_misc() { board_reset(); }
+
 #ifdef CONFIG_FSL_FASTBOOT
 #ifdef CONFIG_ANDROID_RECOVERY
 int is_recovery_key_pressing(void)
