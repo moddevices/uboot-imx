@@ -32,8 +32,6 @@ void spl_dram_init(void)
 	ddr_init();
 }
 
-#define I2C_PAD_CTRL	(PAD_CTL_DSE6 | PAD_CTL_HYS | PAD_CTL_PUE)
-#define PC MUX_PAD_CTRL(I2C_PAD_CTRL)
 struct i2c_pads_info i2c_pad_info1 = {
 	.scl = {
 		.i2c_mode = IMX8MQ_PAD_I2C2_SCL__I2C2_SCL | PC,

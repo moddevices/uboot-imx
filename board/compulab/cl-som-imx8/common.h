@@ -12,4 +12,7 @@ int board_spi_cs_gpio(unsigned bus, unsigned cs);
 static inline int board_ecspi_init(void) { return 0; }
 #endif
 
+#define I2C_PAD_CTRL	(PAD_CTL_DSE6 | PAD_CTL_HYS | PAD_CTL_PUE)
+#define PC MUX_PAD_CTRL(I2C_PAD_CTRL)
+
 #endif /* __CL_SOM_IMX8_COMMON_H__ */
