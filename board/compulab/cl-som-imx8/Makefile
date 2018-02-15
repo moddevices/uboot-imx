@@ -8,5 +8,5 @@ obj-y += common.o
 ifdef CONFIG_SPL_BUILD
 obj-y += spl.o ddr/ddrphy_train.o ddr/ddr_init.o ddr/helper.o
 else
-obj-y += cl-som-imx8.o
+obj-y += cl-som-imx8.o eeprom.o
 endif
