@@ -232,6 +232,11 @@ int board_init(void)
 
 int board_mmc_get_env_dev(int devno)
 {
+	const char *s = getenv("atp");
+	if (s != NULL) {
+		printf("ATP Mode: Save environmet on eMMC\n");
+		return CONFIG_SYS_MMC_ENV_DEV;
+	}
 	return devno;
 }
 
