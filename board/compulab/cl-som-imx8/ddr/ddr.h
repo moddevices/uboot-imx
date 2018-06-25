@@ -4,11 +4,14 @@
  * SPDX-License-Identifier:	GPL-2.0+
  */
 
-void lpddr4_pub_train(void);
-void ddr4_load_train_code(void);
-void lpddr4_800M_cfg_phy(void);
+enum fw_type {
+	FW_1D_IMAGE,
+	FW_2D_IMAGE,
+};
+
 void ddr_init(void);
-void lpddr4_cfg_phy(void);
+void ddr_load_train_code(enum fw_type type);
+void lpddr4_800M_cfg_phy(void);
 
 static inline void reg32_write(unsigned long addr, u32 val)
 {
