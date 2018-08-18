@@ -4,6 +4,9 @@
  * SPDX-License-Identifier:	GPL-2.0+
  */
 
+#ifndef __DDR_H__
+#define __DDR_H__
+
 enum fw_type {
 	FW_1D_IMAGE,
 	FW_2D_IMAGE,
@@ -11,7 +14,7 @@ enum fw_type {
 
 void ddr_init(void);
 void ddr_load_train_code(enum fw_type type);
-void lpddr4_800M_cfg_phy(void);
+int get_ddrphy_training_result(void);
 
 static inline void reg32_write(unsigned long addr, u32 val)
 {
@@ -32,3 +35,5 @@ static inline void reg32setbit(unsigned long addr, u32 bit)
 {
 	setbits_le32(addr, (1 << bit));
 }
+
+#endif

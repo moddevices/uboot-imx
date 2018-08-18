@@ -4,6 +4,17 @@
  * SPDX-License-Identifier:	GPL-2.0+
  */
 
+static unsigned int ddrphy_training_result;
+static void set_ddrphy_training_result(int result)
+{
+	ddrphy_training_result = result;
+}
+
+int get_ddrphy_training_result(void)
+{
+	return (ddrphy_training_result != 0x07);
+}
+
 static inline void poll_pmu_message_ready(void)
 {
 	unsigned int reg;
@@ -93,4 +104,5 @@ void wait_ddrphy_training_complete(void)
 			break;
 		}
 	}
+	set_ddrphy_training_result(mail);
 }
