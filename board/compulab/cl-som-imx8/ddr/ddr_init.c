@@ -28,10 +28,78 @@
 #endif
 #define SILICON_TRAIN
 
+struct regv {
+	unsigned long reg;
+	unsigned long value;
+};
+
+static struct regv aregv1[] = {
+    {0x3d400000,0xa1080020},
+    {0x3d400064,0x610090},
+    {0x3d400138,0x96},
+    {0x3d400200,0x1f},
+    {0x3d400218,0xf070707},
+    {0x3d402064,0x14001f},
+    {0x3d402138,0x20},
+    {0x54012,0x110},
+    {0x5402c,0x1},
+};
+
+static struct regv aregv2[] = {
+    {0x3d400000,0xa3080020},
+    {0x3d400064,0x6100e0},
+    {0x3d400138,0xe6},
+    {0x3d400200,0x16},
+    {0x3d400218,0xf070707},
+    {0x3d402064,0x14002f},
+    {0x3d402138,0x31},
+    {0x54012,0x310},
+    {0x5402c,0x3},
+};
+
+static struct regv aregv4[] = {
+    {0x3d400000,0xa3080020},
+    {0x3d400064,0x6100e0},
+    {0x3d400138,0xe6},
+    {0x3d400200,0x17},
+    {0x3d400218,0x7070707},
+    {0x3d402064,0x14002f},
+    {0x3d402138,0x31},
+    {0x54012,0x310},
+    {0x5402c,0x3},
+};
+
+enum regs {
+    REG0000 = 0x0,
+    REG0064 = 0x1,
+    REG0138 = 0x2,
+    REG0200 = 0x3,
+    REG0218 = 0x4,
+    REG2064 = 0x5,
+    REG2138 = 0x6,
+    REG54012 = 0x7,
+    REG5402C = 0x8,
+};
+
+static unsigned long sdram_size[] = {0, 0x100000000, 0x80000000, 0x40000000};
+static struct regv* pregv[] = {NULL, aregv4, aregv2, aregv1};
+
+#define REG0000_VALUE pregv[0][REG0000].value
+#define REG0064_VALUE pregv[0][REG0064].value
+#define REG0138_VALUE pregv[0][REG0138].value
+#define REG0200_VALUE pregv[0][REG0200].value
+#define REG0218_VALUE pregv[0][REG0218].value
+#define REG2064_VALUE pregv[0][REG2064].value
+#define REG2138_VALUE pregv[0][REG2138].value
+#define REG54012_VALUE pregv[0][REG54012].value
+#define REG5402C_VALUE pregv[0][REG5402C].value
+
+#include "ddrphy_train.c"
+
 void ddr_cfg_phy(void);
-volatile unsigned int tmp, tmp_t, i;
-void ddr_init(void)
+static void _ddr_init(void)
 {
+    volatile unsigned int tmp, tmp_t;
 	/** Initialize DDR clock and DDRC registers **/
 	reg32_write(0x3038a088,0x7070000);
 	reg32_write(0x3038a084,0x4030000);
@@ -61,11 +129,11 @@ void ddr_init(void)
 	reg32_write(0x30391000,0x8f000006);
 	reg32_write(0x3d400304,0x1);
 	reg32_write(0x3d400030,0x1);
-	reg32_write(0x3d400000,0xa3080020);
+	reg32_write(0x3d400000,REG0000_VALUE);
 	reg32_write(0x3d400028,0x0);
 	reg32_write(0x3d400020,0x203);
 	reg32_write(0x3d400024,0x186a000);
-	reg32_write(0x3d400064,0x6100e0);
+	reg32_write(0x3d400064,REG0064_VALUE);
 	reg32_write(0x3d4000d0,0xc003061c);
 	reg32_write(0x3d4000d4,0x9e0000);
 	reg32_write(0x3d4000dc,0xd4002d);
@@ -81,7 +149,7 @@ void ddr_init(void)
 	reg32_write(0x3d40011c,0x401);
 	reg32_write(0x3d400130,0x20600);
 	reg32_write(0x3d400134,0xc100002);
-	reg32_write(0x3d400138,0xe6);
+	reg32_write(0x3d400138,REG0138_VALUE);
 	reg32_write(0x3d400144,0xa00050);
 	reg32_write(0x3d400180,0x3200018);
 	reg32_write(0x3d400184,0x28061a8);
@@ -97,16 +165,16 @@ void ddr_init(void)
 	reg32_write(0x3d4001c4,0x1);
 	reg32_write(0x3d4000f4,0x639);
 	reg32_write(0x3d400108,0x70e1214);
-	reg32_write(0x3d400200,0x16);
+	reg32_write(0x3d400200,REG0200_VALUE);
 	reg32_write(0x3d40020c,0x0);
 	reg32_write(0x3d400210,0x1f1f);
 	reg32_write(0x3d400204,0x80808);
 	reg32_write(0x3d400214,0x7070707);
-	reg32_write(0x3d400218,0xf070707);
+	reg32_write(0x3d400218,REG0218_VALUE);
 	reg32_write(0x3d402020,0x1);
 	reg32_write(0x3d402024,0x518b00);
 	reg32_write(0x3d402050,0x20d040);
-	reg32_write(0x3d402064,0x14002f);
+	reg32_write(0x3d402064,REG2064_VALUE);
 	reg32_write(0x3d4020dc,0x940009);
 	reg32_write(0x3d4020e0,0x310000);
 	reg32_write(0x3d4020e8,0x66004a);
@@ -121,7 +189,7 @@ void ddr_init(void)
 	reg32_write(0x3d40211c,0x301);
 	reg32_write(0x3d402130,0x20300);
 	reg32_write(0x3d402134,0xa100002);
-	reg32_write(0x3d402138,0x31);
+	reg32_write(0x3d402138,REG2138_VALUE);
 	reg32_write(0x3d402144,0x220011);
 	reg32_write(0x3d402180,0xa70006);
 	reg32_write(0x3d402190,0x3858202);
@@ -241,4 +309,47 @@ void ddr_init(void)
 	/* enable DDR auto-refresh mode */
 	tmp = reg32_read(DDRC_RFSHCTL3(0)) & ~0x1;
 	reg32_write(DDRC_RFSHCTL3(0), tmp);
+}
+
+static void ddr_phy_reset(void) 
+{
+    volatile unsigned int reg_value;
+    printf("DDR Phy reset\n");
+    /* Assert */
+    reg_value = reg32_read(0x30391000) | 0xF;
+    reg32_write(0x30391000, reg_value);
+    reg_value = reg32_read(0x30391004) | 0xF;
+    reg32_write(0x30391004, reg_value);
+    mdelay(100);
+    /* De-Assert */
+    reg_value = reg32_read(0x30391000) & ~0xF;
+    reg32_write(0x30391000, reg_value);
+    reg_value = reg32_read(0x30391004) & ~0xF;
+    reg32_write(0x30391004, reg_value);
+    mdelay(100);
+}
+
+void ddr_init()
+{
+    size_t i, n = sizeof(pregv) / sizeof(pregv[0]);
+    unsigned int result;
+    phys_size_t _sdram_size;
+    /* Start from #1; #0 is for defaults */
+    for (i=1 ; i < n ; i++) {
+        pregv[0] = pregv[i];
+        _ddr_init();
+        result = get_ddrphy_training_result();
+        if (result) {
+            printf("Warning [%zu/%zu] : ddr init failed\n", i , n-1);
+        } else {
+            printf("Success [%zu/%zu] : ddr init passed\n", i , n-1);
+            _sdram_size = get_ram_size((long int *)PHYS_SDRAM, sdram_size[i]);
+            printf("Mem discovery %zx / %zx \n",_sdram_size, sdram_size[i]);
+            if (_sdram_size == sdram_size[i]) {
+                return;
+            }
+        }
+        ddr_phy_reset();
+    }
+    return;
 }

@@ -60,11 +60,49 @@ int board_postclk_init(void)
 }
 #endif
 
+static phys_size_t imx8_ddr_size(void)
+{
+    unsigned long mem = 0x3d400000;
+	unsigned long value = readl(mem+0x200);
+	phys_size_t dram_size;
+
+    switch (value) {
+    case 0x1f:
+        dram_size = 0x40000000;
+        break;
+    case 0x16:
+        dram_size = 0x80000000;
+        break;
+    case 0x17:
+        /* dram_size = 0x100000000;*/
+        /* reports 3G only, if reports above then gets crashed */
+        dram_size = 0xc0000000;
+        break;
+    default:
+        break;
+    };
+    return dram_size;
+}
+
 int dram_init(void)
 {
-	gd->ram_size = PHYS_SDRAM_SIZE;
+    gd->ram_size = imx8_ddr_size();
+    return 0;
+}
 
-	return 0;
+void dram_init_banksize(void)
+{
+    gd->bd->bi_dram[0].start = PHYS_SDRAM;
+    gd->bd->bi_dram[0].size = imx8_ddr_size();
+}
+
+phys_size_t get_effective_memsize(void)
+{
+    phys_size_t dram_size = imx8_ddr_size();
+    if (dram_size > 0xc0000000)
+        return 0xc0000000;
+
+    return dram_size;
 }
 
 #ifdef CONFIG_OF_BOARD_SETUP
