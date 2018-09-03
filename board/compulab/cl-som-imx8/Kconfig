@@ -9,4 +9,61 @@ config SYS_VENDOR
 config SYS_CONFIG_NAME
 	default "cl-som-imx8"
 
+choice
+	prompt "RAM Volume select"
+	default RAM_2_1G
+	help
+	 This option configures 2G RAM only
+
+config RAM_1G
+	bool "RAM_1G"
+	select RAM_SET_1G
+	help
+	 This option configures 1G RAM only
+
+config RAM_2G
+	bool "RAM_2G"
+	select RAM_SET_2G
+	help
+	 This option configures 2G RAM only
+
+config RAM_2_1G
+	bool "RAM_2_1G"
+	select RAM_SET_2G
+	select RAM_SET_1G
+	help
+	 This option configures 2G RAM if no luck then 1G
+
+config RAM_4G
+	bool "RAM_4G"
+	select RAM_SET_4G
+	help
+	 This option configures 4G RAM only
+
+config RAM_4_1G
+	bool "RAM_4_1G"
+	select RAM_SET_4G
+	select RAM_SET_1G
+	help
+	 This option configures 4G RAM if no luck then 1G
+
+config RAM_4_2_1G
+	bool "RAM_4_2_1G"
+	select RAM_SET_4G
+	select RAM_SET_2G
+	select RAM_SET_1G
+	help
+	 This option configures 4G RAM if no luck then 2G if no luck then 1G (does not work yet)
+
+endchoice
+
+config RAM_SET_4G
+	bool
+
+config RAM_SET_2G
+	bool
+
+config RAM_SET_1G
+	bool
+
 endif
