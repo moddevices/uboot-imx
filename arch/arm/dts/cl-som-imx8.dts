@@ -14,14 +14,11 @@
 
 /dts-v1/;
 
-/* First 128KB is for PSCI ATF. */
-/memreserve/ 0x40000000 0x00020000;
-
 #include "fsl-imx8mq.dtsi"
 
 / {
 	model = "CompuLab CL-SOM-iMX8";
-	compatible = "fsl,imx8mq";
+	compatible = "compulab,cl-som-imx8", "fsl,imx8mq";
 
 	bcmdhd_wlan_0: bcmdhd_wlan@0 {
 		compatible = "android,bcmdhd_wlan";
