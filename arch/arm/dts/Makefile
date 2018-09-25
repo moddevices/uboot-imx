@@ -391,6 +391,7 @@ dtb-$(CONFIG_ARCH_IMX8M) += fsl-imx8mq-evk.dtb \
 		fsl-imx8mq-ddr4-arm2.dtb
 
 dtb-$(CONFIG_TARGET_CL_SOM_IMX8) += cl-som-imx8.dtb
+dtb-$(CONFIG_TARGET_UCM_IMX8) += ucm-imx8.dtb
 
 dtb-$(CONFIG_ARCH_IMX8) += fsl-imx8qm-lpddr4-arm2.dtb \
 		fsl-imx8qm-ddr4-arm2.dtb \

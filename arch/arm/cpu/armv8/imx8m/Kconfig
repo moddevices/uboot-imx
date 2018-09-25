@@ -22,8 +22,8 @@ config TARGET_IMX8MQ_DDR4_ARM2
 	select IMX8M
 	select SUPPORT_SPL
 
-config TARGET_CL_SOM_IMX8
-	bool "cl-som-imx8"
+config TARGET_COMPULAB_IMX8
+	bool "compulab-imx8"
 	select IMX8M
 	select SUPPORT_SPL
 
@@ -34,6 +34,6 @@ config SYS_SOC
 
 source "board/freescale/imx8mq_evk/Kconfig"
 source "board/freescale/imx8mq_arm2/Kconfig"
-source "board/compulab/cl-som-imx8/Kconfig"
+source "board/compulab/imx8/Kconfig"
 
 endif
