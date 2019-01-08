@@ -190,7 +190,7 @@
 #define CONFIG_SYS_MMC_ENV_DEV		0   /* USDHC1/eMMC */
 
 /* Size of malloc() pool */
-#define CONFIG_SYS_MALLOC_LEN		((CONFIG_ENV_SIZE + (2*1024)) * 1024)
+#define CONFIG_SYS_MALLOC_LEN		((CONFIG_ENV_SIZE + (2*1024) + (16*1024)) * 1024)
 
 #define CONFIG_SYS_SDRAM_BASE           0x40000000
 #define PHYS_SDRAM                      0x40000000
@@ -302,6 +302,18 @@
 #endif
 
 #define CONFIG_OF_SYSTEM_SETUP
+
+/* Framebuffer */
+#ifdef CONFIG_VIDEO
+#define CONFIG_VIDEO_IMXDCSS
+#define CONFIG_VIDEO_BMP_RLE8
+#define CONFIG_SPLASH_SCREEN
+#define CONFIG_SPLASH_SCREEN_ALIGN
+#define CONFIG_BMP_16BPP
+#define CONFIG_VIDEO_LOGO
+#define CONFIG_VIDEO_BMP_LOGO
+#define CONFIG_IMX_VIDEO_SKIP
+#endif
 
 #if defined(CONFIG_ANDROID_SUPPORT)
 #include "cl-som-imx8_android.h"
