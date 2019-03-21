@@ -23,12 +23,6 @@
 	model = "CompuLab CL-SOM-iMX8";
 	compatible = "compulab,cl-som-imx8", "fsl,imx8mq";
 
-	bcmdhd_wlan_0: bcmdhd_wlan@0 {
-		compatible = "android,bcmdhd_wlan";
-		bcmdhd_fw = "/lib/firmware/bcm/1CX_BCM4356/fw_bcmdhd.bin";
-		bcmdhd_nv = "/lib/firmware/bcm/1CX_BCM4356/bcmdhd.cal";
-	};
-
 	chosen {
 		bootargs = "console=ttymxc2,115200 earlycon=ec_imx6q,0x30880000,115200";
 		stdout-path = &uart3;
