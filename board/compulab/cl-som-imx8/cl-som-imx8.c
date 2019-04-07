@@ -237,11 +237,19 @@ static void dwc3_nxp_usb_phy_init(struct dwc3_device *dwc3)
 	RegData &= ~(USB_PHY_CTRL1_RESET | USB_PHY_CTRL1_ATERESET);
 	writel(RegData, dwc3->base + USB_PHY_CTRL1);
 }
+#endif
 
+#if defined(CONFIG_USB_DWC3) || defined(CONFIG_USB_XHCI_IMX8M)
 int board_usb_init(int index, enum usb_init_type init)
 {
-	dwc3_nxp_usb_phy_init(&dwc3_device_data);
-	return dwc3_uboot_init(&dwc3_device_data);
+	int ret = 0;
+	imx8m_usb_power(index, true);
+
+	if (index == 0 && init == USB_INIT_DEVICE) {
+		dwc3_nxp_usb_phy_init(&dwc3_device_data);
+		return dwc3_uboot_init(&dwc3_device_data);
+	}
+	return ret;
 }
 
 int board_usb_cleanup(int index, enum usb_init_type init)
@@ -250,6 +258,23 @@ int board_usb_cleanup(int index, enum usb_init_type init)
 	return 0;
 }
 #endif
+
+static iomux_v3_cfg_t const usbmux_pads[] = {
+	IMX8MQ_PAD_GPIO1_IO04__GPIO1_IO4 | MUX_PAD_CTRL(NO_PAD_CTRL),
+};
+
+static void setup_iomux_usbmux(void)
+{
+	imx_iomux_v3_setup_multiple_pads(usbmux_pads, ARRAY_SIZE(usbmux_pads));
+
+	gpio_request(IMX_GPIO_NR(1, 4), "usb_mux");
+	gpio_direction_output(IMX_GPIO_NR(1, 4), 0);
+}
+
+static void setup_usbmux(void)
+{
+	setup_iomux_usbmux();
+}
 
 int board_init(void)
 {
@@ -264,6 +289,11 @@ int board_init(void)
 	/* Configure #0 bus in order to read an #0x54 eeprom */
 	setup_i2c(0, CONFIG_SYS_I2C_SPEED, 0x7f, &i2c_pad_info0);
 
+	setup_usbmux();
+
+#if defined(CONFIG_USB_DWC3) || defined(CONFIG_USB_XHCI_IMX8M)
+	init_usb_clk();
+#endif
 	return 0;
 }
 

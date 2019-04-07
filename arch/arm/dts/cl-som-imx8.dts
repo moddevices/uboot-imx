@@ -51,6 +51,18 @@
 			gpio = <&gpio2 19 GPIO_ACTIVE_HIGH>;
 			enable-active-high;
 		};
+
+		reg_usb_mux: usb_mux {
+			compatible = "regulator-fixed";
+			pinctrl-names = "default";
+			pinctrl-0 = <&pinctrl_usbimux1>;
+			regulator-name = "usb_mux";
+			regulator-min-microvolt = <3300000>;
+			regulator-max-microvolt = <3300000>;
+			gpio = <&gpio1 4 GPIO_ACTIVE_HIGH>;
+			regulator-always-on;
+			enable-active-low;
+		};
 	};
 
 	simple_sound: sound {
@@ -109,6 +121,12 @@
 		pinctrl_hog: hoggrp {
 			fsl,pins = <
 				MX8MQ_IOMUXC_GPIO1_IO12_GPIO1_IO12	0x16
+			>;
+		};
+
+		pinctrl_usbimux1: usbmux1grp {
+			fsl,pins = <
+				MX8MQ_IOMUXC_GPIO1_IO04_GPIO1_IO4	0x16
 			>;
 		};
 
@@ -544,7 +562,6 @@
 	dr_mode = "peripheral";
 };
 
-#if 0
 &usb3_phy1 {
 	status = "okay";
 };
@@ -557,7 +574,6 @@
 	status = "okay";
 	dr_mode = "host";
 };
-#endif
 
 &sai2 {
 	#sound-dai-cells = <0>;
