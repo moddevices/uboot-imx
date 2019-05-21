@@ -212,7 +212,6 @@ int power_init_board(void)
 		return -ENODEV;
 
 	pmic_reg_read(p, PFUZE100_DEVICEID, &reg);
-	printf("PMIC:  PFUZE100 ID=0x%02x\n", reg);
 
 	/* Increase the DRAM rail voltage up to 1V125 */
 	pmic_reg_read(p, PFUZE100_SW2VOL, &reg);
@@ -315,7 +314,6 @@ void board_boot_order(u32 *spl_boot_list)
 	spl_boot_list[0] = spl_boot_device();
 	switch (spl_boot_list[0]) {
 	case BOOT_DEVICE_MMC1:
-		printf("SPL Boot Device: MMC1\n");
 		spl_boot_list[1] = BOOT_DEVICE_MMC2;
 		break;
 	case BOOT_DEVICE_MMC2:
