@@ -1032,9 +1032,6 @@ static int do_env_import(cmd_tbl_t *cmdtp, int flag,
 	if (argc < 1)
 		return CMD_RET_USAGE;
 
-	if (!fmt)
-		printf("## Warning: defaulting to text format\n");
-
 	if (sep != '\n' && crlf_is_lf )
 		crlf_is_lf = 0;
 

@@ -409,14 +409,6 @@ int do_load(cmd_tbl_t *cmdtp, int flag, int argc, char * const argv[],
 	if (ret < 0)
 		return 1;
 
-	printf("%llu bytes read in %lu ms", len_read, time);
-	if (time > 0) {
-		puts(" (");
-		print_size(div_u64(len_read, time) * 1000, "/s");
-		puts(")");
-	}
-	puts("\n");
-
 	setenv_hex("fileaddr", addr);
 	setenv_hex("filesize", len_read);
 

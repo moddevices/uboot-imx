@@ -105,16 +105,10 @@ void set_default_env(const char *s)
 	}
 
 	if (s) {
-		if (*s == '!') {
-			printf("*** Warning - %s, "
-				"using default environment\n\n",
-				s + 1);
-		} else {
+		if (*s != '!') {
 			flags = H_INTERACTIVE;
 			puts(s);
 		}
-	} else {
-		puts("Using default environment\n\n");
 	}
 
 	if (himport_r(&env_htab, (char *)default_environment,

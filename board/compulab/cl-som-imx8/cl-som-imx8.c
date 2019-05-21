@@ -130,6 +130,7 @@ static void setup_iomux_fec(void)
 	gpio_direction_output(IMX_GPIO_NR(1, 9), 1);
 }
 
+#if 0
 #define NO_MAC_ADDR	"No MAC address found for %s\n"
 static int handle_mac_address(char *env_var, uint eeprom_bus)
 {
@@ -149,6 +150,7 @@ static int handle_mac_address(char *env_var, uint eeprom_bus)
 
 	return eth_setenv_enetaddr(env_var, enetaddr);
 }
+#endif
 
 static int setup_fec(void)
 {
@@ -160,10 +162,12 @@ static int setup_fec(void)
 	return set_clk_enet(ENET_125MHz);
 }
 
+#if 0
 static void setup_fec_mac(void) {
 	if (handle_mac_address("ethaddr", /*CONFIG_SYS_I2C_EEPROM_BUS*/0))
 		printf(NO_MAC_ADDR, "primary NIC");
 }
+#endif
 
 int board_phy_config(struct phy_device *phydev)
 {

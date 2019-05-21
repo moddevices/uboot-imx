@@ -337,7 +337,6 @@ static void _ddr_init(void)
 static void ddr_phy_reset(void) 
 {
     volatile unsigned int reg_value;
-    printf("DDR Phy reset\n");
     /* Assert */
     reg_value = reg32_read(0x30391000) | 0xF;
     reg32_write(0x30391000, reg_value);
@@ -367,7 +366,6 @@ void ddr_init()
         if (result) {
             printf("Warning [%zu/%zu] : ddr init failed\n", i , n-1);
         } else {
-            printf("Success [%zu/%zu] : ddr init passed\n", i , n-1);
 #ifdef __GET_RAM_SIZE__
             _sdram_size = get_ram_size((long int *)PHYS_SDRAM, sdram_size[i]);
             printf("Mem discovery %zx / %zx \n",_sdram_size, sdram_size[i]);
