@@ -10,8 +10,7 @@
 #include <errno.h>
 #include <asm/io.h>
 #include <asm/mach-imx/iomux-v3.h>
-#include <asm/arch-imx8m/imx-regs-imx8mq.h>
-#include <asm/arch-imx8m/ddr.h>
+#include <asm/arch/ddr.h>
 #include <asm/arch/imx8mq_pins.h>
 #include <asm/arch/sys_proto.h>
 #include <power/pmic.h>
@@ -27,10 +26,34 @@
 
 DECLARE_GLOBAL_DATA_PTR;
 
+#define CL_SOM_IMX8_1G 0x1
+#define CL_SOM_IMX8_2G 0x2
+
+static int get_baseboard_id(void)
+{
+#ifdef CONFIG_RAM_1G
+#define BOARD_ID CL_SOM_IMX8_1G
+#endif
+#ifdef CONFIG_RAM_2G
+#define BOARD_ID CL_SOM_IMX8_2G
+#endif
+#ifdef BOARD_ID
+	return BOARD_ID;
+#else
+#error Invalid memory configuration
+#endif
+}
+
 void spl_dram_init(void)
 {
 	/* ddr init */
-	ddr_init();
+	int board_id = get_baseboard_id();
+
+	/* ddr init */
+	if ((board_id == CL_SOM_IMX8_2G))
+		ddr_init(&dram_timing_2g);
+	else
+		ddr_init(&dram_timing_1g);
 }
 
 struct i2c_pads_info i2c_pad_info1 = {
