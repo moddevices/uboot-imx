@@ -186,6 +186,14 @@ int power_init_board(void)
 	pmic_reg_read(p, PFUZE100_DEVICEID, &reg);
 	printf("PMIC:  PFUZE100 ID=0x%02x\n", reg);
 
+	/* Increase the GPU rail voltage */
+	pmic_reg_read(p, PFUZE100_SW1ABVOL, &reg);
+	if ((reg & 0x3f) != 0x1C) {
+		reg &= ~0x3f;
+		reg |= 0x1C;
+		pmic_reg_write(p, PFUZE100_SW1ABVOL, reg);
+	}
+
 	pmic_reg_read(p, PFUZE100_SW3AVOL, &reg);
 	if ((reg & 0x3f) != 0x18) {
 		reg &= ~0x3f;
