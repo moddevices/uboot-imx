@@ -365,7 +365,11 @@ int frac_pll_init(u32 pll, enum frac_pll_out_val val)
 		pll_cfg1 = (void * __iomem)ARM_PLL_CFG1;
 
 		if (val == FRAC_PLL_OUT_1000M)
-			val_cfg1 = FRAC_PLL_INT_DIV_CTL_VAL(49);
+			// Clock 1.0GHz
+            //val_cfg1 = FRAC_PLL_INT_DIV_CTL_VAL(49);
+			
+            // Clock 1.5GHz
+            val_cfg1 = FRAC_PLL_INT_DIV_CTL_VAL(74);
 		else
 			val_cfg1 = FRAC_PLL_INT_DIV_CTL_VAL(79);
 		val_cfg0 = FRAC_PLL_CLKE_MASK | FRAC_PLL_REFCLK_SEL_OSC_25M |
