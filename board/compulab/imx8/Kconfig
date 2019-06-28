@@ -38,10 +38,10 @@ config RAM_2G
 	help
 	 This option configures 2G RAM only
 
-config RAM_4G
-	bool "RAM_4G"
+config RAM_BOARD_CFG
+	bool "RAM_BOARD_CFG"
 	help
-	 This option configures 4G RAM only
+	 Read board configuration GPIO for RAM size
 
 endchoice
 

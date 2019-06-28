@@ -29,6 +29,26 @@ DECLARE_GLOBAL_DATA_PTR;
 #define CL_SOM_IMX8_1G 0x1
 #define CL_SOM_IMX8_2G 0x2
 
+static iomux_v3_cfg_t const cfg_pads[] = {
+    IMX8MQ_PAD_UART4_TXD__GPIO5_IO29| MUX_PAD_CTRL(NO_PAD_CTRL),
+};
+
+#define CFG_GPIO IMX_GPIO_NR(5, 29)
+static int get_baseboard_cfg(void)
+{
+    unsigned int cfg_gpio;
+    imx_iomux_v3_setup_multiple_pads(cfg_pads, ARRAY_SIZE(cfg_pads));
+    gpio_request(CFG_GPIO, "cfg_gpio");
+    cfg_gpio = gpio_get_value(CFG_GPIO);
+    printf("%s > CFG P20.15 [GPIO5_IO29]: [ 0 (GND) - D2 ; 1 (3V3) - D1 ]\n",__func__);
+    printf("%s > CFG P20.15 [GPIO5_IO29]: [ %s ]\n",__func__,((cfg_gpio==0) ? "D2" : "D1"));
+
+    if (cfg_gpio)
+        return CL_SOM_IMX8_1G;
+    else
+        return CL_SOM_IMX8_2G;
+}
+
 static int get_baseboard_id(void)
 {
 #ifdef CONFIG_RAM_1G
@@ -40,14 +60,21 @@ static int get_baseboard_id(void)
 #ifdef BOARD_ID
 	return BOARD_ID;
 #else
-#error Invalid memory configuration
+	return get_baseboard_cfg();
 #endif
+}
+
+#define TCM_BOARD_CFG 0x7e0000
+static void set_baseboard_tcm(int board_id)
+{
+	writel(board_id, TCM_BOARD_CFG);
 }
 
 void spl_dram_init(void)
 {
 	/* ddr init */
 	int board_id = get_baseboard_id();
+	set_baseboard_tcm(board_id);
 
 	/* ddr init */
 	if ((board_id == CL_SOM_IMX8_2G))
