@@ -24,7 +24,7 @@ config SYS_CONFIG_NAME
 
 choice
 	prompt "RAM Volume select"
-	default RAM_2G
+	default RAM_BOARD_CFG
 	help
 	 This option configures 2G RAM only
 
