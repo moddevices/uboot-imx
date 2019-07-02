@@ -29,13 +29,16 @@ DECLARE_GLOBAL_DATA_PTR;
 #define CL_SOM_IMX8_1G 0x1
 #define CL_SOM_IMX8_2G 0x2
 
+#ifdef CONFIG_RAM_BOARD_CFG
+#define CFG_GPIO IMX_GPIO_NR(5, 29)
 static iomux_v3_cfg_t const cfg_pads[] = {
     IMX8MQ_PAD_UART4_TXD__GPIO5_IO29| MUX_PAD_CTRL(NO_PAD_CTRL),
 };
+#endif
 
-#define CFG_GPIO IMX_GPIO_NR(5, 29)
-static int get_baseboard_cfg(void)
+static int get_baseboard_id(void)
 {
+#ifdef CONFIG_RAM_BOARD_CFG
     unsigned int cfg_gpio;
     imx_iomux_v3_setup_multiple_pads(cfg_pads, ARRAY_SIZE(cfg_pads));
     gpio_request(CFG_GPIO, "cfg_gpio");
@@ -47,10 +50,7 @@ static int get_baseboard_cfg(void)
         return CL_SOM_IMX8_1G;
     else
         return CL_SOM_IMX8_2G;
-}
-
-static int get_baseboard_id(void)
-{
+#else
 #ifdef CONFIG_RAM_1G
 #define BOARD_ID CL_SOM_IMX8_1G
 #endif
@@ -60,7 +60,8 @@ static int get_baseboard_id(void)
 #ifdef BOARD_ID
 	return BOARD_ID;
 #else
-	return get_baseboard_cfg();
+#error "Invalid RAM configuration"
+#endif
 #endif
 }
 
