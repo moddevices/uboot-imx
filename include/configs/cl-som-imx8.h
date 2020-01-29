@@ -104,28 +104,28 @@
 	"fdt_file=/modduox-cl-imx8mq.dtb\0"                       \
 	"initrd_addr=0x43800000\0"                                \
 	"initrd_high=0xffffffffffffffff\0"                        \
-	"bootenv_file=/uEnv.txt\0"                                \
+	"bootenv_file=/uEnv-cl-imx8mq.txt\0"                      \
 	"kernel=/Image-cl-imx8mq\0"                               \
 	"autoload=off\0"                                          \
 	"mmcautodetect=yes\0"                                     \
 	"root=/dev/mmcblk0p2\0"                                   \
 	"boot_image=booti ${loadaddr} - ${fdt_addr}\0"            \
-	"main_bootargs=setenv bootargs console=${console} root=${root} loglevel=${loglevel} ${extraargs}\0"                  \
-	"main_loadbootenv=ext4load mmc 0:2 ${loadaddr} /boot${bootenv_file} && env import ${loadaddr} ${filesize}\0"         \
-	"main_fdt=ext4load mmc 0:2 ${fdt_addr} /boot${fdt_file}\0"                                                           \
-	"main_kernel=ext4load mmc 0:2 ${loadaddr} /boot${kernel}\0"                                                          \
-	"boot_main=run main_loadbootenv main_bootargs main_fdt main_kernel boot_image\0"                                     \
-	"restore_bootargs=setenv bootargs console=${console} loglevel=${loglevel} ${extraargs}\0"                            \
-	"restore_loadbootenv=fatload mmc 0:1 ${loadaddr} ${bootenv_file} && env import ${loadaddr} ${filesize}\0"            \
-	"restore_fdt=fatload mmc 0:1 ${fdt_addr} ${fdt_file}\0"                                                              \
-	"restore_kernel=fatload mmc 0:1 ${loadaddr} ${kernel}\0"                                                             \
-	"boot_restore=run restore_loadbootenv restore_bootargs restore_fdt restore_kernel boot_image\0"                      \
-	"usb_bootargs=setenv bootargs console=${console} loglevel=${loglevel} ${extraargs}\0"                                \
-	"usb_loadbootenv=load usb 0 ${loadaddr} ${bootenv_file} && env import ${loadaddr} ${filesize}\0"                     \
-	"usb_fdt=load usb 0 ${fdt_addr} ${fdt_file}\0"                                                                       \
-	"usb_kernel=load usb 0 ${loadaddr} ${kernel}\0"                                                                      \
-	"boot_usb=usb start; run usb_loadbootenv usb_bootargs usb_bootargs usb_fdt usb_kernel boot_image\0"                  \
-	"boot_fastboot=fastboot\0"                                                                                           \
+	"main_bootargs=setenv bootargs console=${console} root=${root} loglevel=${loglevel} ${extraargs}\0"          \
+	"main_loadbootenv=ext4load mmc 0:2 ${loadaddr} /boot${bootenv_file} && env import ${loadaddr} ${filesize}\0" \
+	"main_fdt=ext4load mmc 0:2 ${fdt_addr} /boot${fdt_file}\0"                                                   \
+	"main_kernel=ext4load mmc 0:2 ${loadaddr} /boot${kernel}\0"                                                  \
+	"boot_main=run main_loadbootenv main_bootargs main_fdt main_kernel boot_image\0"                             \
+	"restore_bootargs=setenv bootargs console=${console} loglevel=${loglevel} ${extraargs}\0"                    \
+	"restore_loadbootenv=fatload mmc 0:1 ${loadaddr} ${bootenv_file} && env import ${loadaddr} ${filesize}\0"    \
+	"restore_fdt=fatload mmc 0:1 ${fdt_addr} ${fdt_file}\0"                                                      \
+	"restore_kernel=fatload mmc 0:1 ${loadaddr} ${kernel}\0"                                                     \
+	"boot_restore=run restore_loadbootenv restore_bootargs restore_fdt restore_kernel boot_image\0"              \
+	"usb_bootargs=setenv bootargs console=${console} loglevel=${loglevel} ${extraargs}\0"                        \
+	"usb_loadbootenv=load usb 0 ${loadaddr} ${bootenv_file} && env import ${loadaddr} ${filesize}\0"             \
+	"usb_fdt=load usb 0 ${fdt_addr} ${fdt_file}\0"                                                               \
+	"usb_kernel=load usb 0 ${loadaddr} ${kernel}\0"                                                              \
+	"boot_usb=usb start; run usb_loadbootenv usb_bootargs usb_bootargs usb_fdt usb_kernel boot_image\0"          \
+	"boot_fastboot=fastboot\0"                                                                                   \
 	"loadbootenv=echo\0"
 
 #define CONFIG_BOOTCOMMAND \
