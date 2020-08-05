@@ -111,14 +111,14 @@
 	"root=/dev/mmcblk0p2\0"                                   \
 	"boot_image=booti ${loadaddr} - ${fdt_addr}\0"            \
 	"main_bootargs=setenv bootargs console=${console} root=${root} loglevel=${loglevel} ${extraargs}\0"          \
-	"main_loadbootenv=ext4load mmc 0:2 ${loadaddr} /boot${bootenv_file} && env import ${loadaddr} ${filesize}\0" \
-	"main_fdt=ext4load mmc 0:2 ${fdt_addr} /boot${fdt_file}\0"                                                   \
-	"main_kernel=ext4load mmc 0:2 ${loadaddr} /boot${kernel}\0"                                                  \
+	"main_loadbootenv=ext4load mmc ${mmcdev}:2 ${loadaddr} /boot${bootenv_file} && env import ${loadaddr} ${filesize}\0" \
+	"main_fdt=ext4load mmc ${mmcdev}:2 ${fdt_addr} /boot${fdt_file}\0"                                                   \
+	"main_kernel=ext4load mmc ${mmcdev}:2 ${loadaddr} /boot${kernel}\0"                                                  \
 	"boot_main=run main_loadbootenv main_bootargs main_fdt main_kernel boot_image\0"                             \
 	"restore_bootargs=setenv bootargs console=${console} loglevel=${loglevel} ${extraargs}\0"                    \
-	"restore_loadbootenv=fatload mmc 0:1 ${loadaddr} ${bootenv_file} && env import ${loadaddr} ${filesize}\0"    \
-	"restore_fdt=fatload mmc 0:1 ${fdt_addr} ${fdt_file}\0"                                                      \
-	"restore_kernel=fatload mmc 0:1 ${loadaddr} ${kernel}\0"                                                     \
+	"restore_loadbootenv=fatload mmc ${mmcdev}:1 ${loadaddr} ${bootenv_file} && env import ${loadaddr} ${filesize}\0"    \
+	"restore_fdt=fatload mmc ${mmcdev}:1 ${fdt_addr} ${fdt_file}\0"                                                      \
+	"restore_kernel=fatload mmc ${mmcdev}:1 ${loadaddr} ${kernel}\0"                                                     \
 	"boot_restore=run restore_loadbootenv restore_bootargs restore_fdt restore_kernel boot_image\0"              \
 	"usb_bootargs=setenv bootargs console=${console} loglevel=${loglevel} ${extraargs}\0"                        \
 	"usb_loadbootenv=load usb 0 ${loadaddr} ${bootenv_file} && env import ${loadaddr} ${filesize}\0"             \
